@@ -5,6 +5,18 @@ buildscript {
         google()
         jcenter()
     }
+    ext {
+        nav_version = '2.2.0'
+        lifecycle_version = '2.2.0'
+        room_version = '2.2.6'
+        lottieVersion = '3.3.1'
+        lifecycleVersion = '2.3.0'
+        roomVersion = '2.3.0-beta02'
+        pagingVersion = '3.0.0-beta01'
+        retrofitVersion = '2.7.2'
+        okhttpLoggingInterceptorVersion = '4.9.0'
+        coroutinesVersion = '1.4.2'
+    }
     dependencies {
         classpath "com.android.tools.build:gradle:4.1.1"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
