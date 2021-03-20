@@ -18,6 +18,8 @@ buildscript {
         coroutinesVersion = '1.4.2'
         glideVersion = '4.11.0'
         daggerVersion = '2.25.4'
+        fragmentVersion = "1.3.1"
+        lottieVersion = '3.3.1'
     }
     dependencies {
         classpath "com.android.tools.build:gradle:4.1.1"
