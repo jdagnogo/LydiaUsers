@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">LydiaUsers</string>
     <string name="our_users">Nos utilisateurs</string>
+    <string name="all_users">Tous les utilsateurs</string>
 </resources>

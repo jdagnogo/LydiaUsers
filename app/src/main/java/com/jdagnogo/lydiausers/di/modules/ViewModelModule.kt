@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.jdagnogo.lydiausers.di.utils.ViewModelFactory
 import com.jdagnogo.lydiausers.di.utils.ViewModelKey
+import com.jdagnogo.lydiausers.viewmodel.HomeViewModel
 import com.jdagnogo.lydiausers.viewmodel.SplashScreenViewModel
 import dagger.Binds
 import dagger.Module
@@ -16,6 +17,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(SplashScreenViewModel::class)
     abstract fun bindSplashScreenViewModel(viewModel: SplashScreenViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(HomeViewModel::class)
+    abstract fun bindHomeViewModel(viewModel: HomeViewModel): ViewModel
 
 
     @Binds

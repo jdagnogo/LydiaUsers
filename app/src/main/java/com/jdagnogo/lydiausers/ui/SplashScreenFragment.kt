@@ -2,6 +2,7 @@ package com.jdagnogo.lydiausers.ui
 
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.jdagnogo.lydiausers.R
 import com.jdagnogo.lydiausers.viewmodel.SplashScreenViewModel
@@ -19,6 +20,16 @@ class SplashScreenFragment : BaseFragment(){
     override fun subscribeViewModel() {
         viewModel = ViewModelProvider(this, viewModelFactory)
             .get(SplashScreenViewModel::class.java)
+        viewModel.loadingFinished.observe(viewLifecycleOwner, directionObserver)
+    }
+
+    private val directionObserver = Observer<Unit> { _ ->
+        requireActivity().supportFragmentManager.beginTransaction().apply {
+            HomeFragment.newInstance().apply {
+                replace(R.id.fragment_container, this)
+            }
+            commit()
+        }
     }
 
     override fun setSupportInjection(): Fragment {
@@ -34,9 +45,6 @@ class SplashScreenFragment : BaseFragment(){
         return TAG
     }
     companion object {
-        fun newInstance() = SplashScreenFragment().apply {
-            arguments = bundleOf()
-        }
         const val TAG = "SplashScreenFragment"
     }
 }

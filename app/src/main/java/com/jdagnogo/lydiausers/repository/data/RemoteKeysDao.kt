@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.android.codelabs.paging.db
+package com.jdagnogo.lydiausers.repository.data
 
 import androidx.room.Dao
 import androidx.room.Insert
