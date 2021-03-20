@@ -29,15 +29,9 @@ abstract class BaseFragment : Fragment() {
         initViews()
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        initData()
-    }
-
     abstract fun setContentView(): Int
     abstract fun subscribeViewModel()
     abstract fun setSupportInjection(): Fragment
     abstract fun initViews()
-    abstract fun initData()
     abstract fun getFragmentTag():String
 }

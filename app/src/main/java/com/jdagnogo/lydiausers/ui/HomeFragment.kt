@@ -19,10 +19,6 @@ class HomeFragment :BaseFragment(){
         TODO("Not yet implemented")
     }
 
-    override fun initData() {
-        TODO("Not yet implemented")
-    }
-
     override fun getFragmentTag(): String {
         TODO("Not yet implemented")
     }

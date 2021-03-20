@@ -2,7 +2,7 @@ package com.jdagnogo.lydiausers.di.modules
 
 import android.content.Context
 import com.jdagnogo.lydiausers.LydiaUsersApplication
-import com.jdagnogo.lydiausers.utils.AppContext
+import com.jdagnogo.lydiausers.di.utils.AppContext
 
 import dagger.Module
 import dagger.Provides

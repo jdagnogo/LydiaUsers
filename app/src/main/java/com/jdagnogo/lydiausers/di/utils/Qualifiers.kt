@@ -1,4 +1,4 @@
-package com.jdagnogo.lydiausers.utils
+package com.jdagnogo.lydiausers.di.utils
 
 import javax.inject.Qualifier
 
