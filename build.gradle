@@ -16,6 +16,8 @@ buildscript {
         retrofitVersion = '2.7.2'
         okhttpLoggingInterceptorVersion = '4.9.0'
         coroutinesVersion = '1.4.2'
+        glideVersion = '4.11.0'
+        daggerVersion = '2.25.4'
     }
     dependencies {
         classpath "com.android.tools.build:gradle:4.1.1"
