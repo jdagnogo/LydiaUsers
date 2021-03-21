@@ -77,37 +77,10 @@ class HomeFragment : BaseFragment(), AdapterOnclick {
         }.root
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        adapter.removeLoadStateListener {}
-    }
-
     @InternalCoroutinesApi
     override fun initViews() {
         user_list.adapter = adapter
         adapter.listener = this
-        adapter.addLoadStateListener { loadState ->
-            // Only show the list if refresh succeeds.
-            //user_list.isVisible = loadState.mediator?.refresh is LoadState.NotLoading
-            // Show loading spinner during initial load or refresh.
-            // Show the retry state if initial load or refresh fails.
-
-            // Toast on any error, regardless of whether it came from RemoteMediator or PagingSource
-            val errorState = loadState.source.append as? LoadState.Error
-                ?: loadState.source.prepend as? LoadState.Error
-                ?: loadState.append as? LoadState.Error
-                ?: loadState.prepend as? LoadState.Error
-            errorState?.let {
-            }
-        }
-        lifecycleScope.launch {
-            adapter.loadStateFlow
-                // Only emit when REFRESH LoadState for RemoteMediator changes.
-                .distinctUntilChangedBy { it.refresh }
-                // Only react to cases where Remote REFRESH completes i.e., NotLoading.
-                .filter { it.refresh is LoadState.NotLoading }
-                .collect { user_list.scrollToPosition(0) }
-        }
         getUsers()
     }
 
@@ -119,7 +92,6 @@ class HomeFragment : BaseFragment(), AdapterOnclick {
         fun newInstance() = HomeFragment().apply {
             arguments = bundleOf()
         }
-
         const val TAG = "HomeFragment"
     }
 }
