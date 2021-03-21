@@ -8,6 +8,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import com.jdagnogo.lydiausers.R
+import com.jdagnogo.lydiausers.model.User
+import com.jdagnogo.lydiausers.ui.adapter.AdapterOnclick
 import com.jdagnogo.lydiausers.ui.adapter.UserListAdapter
 import com.jdagnogo.lydiausers.viewmodel.HomeViewModel
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -20,7 +22,7 @@ import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class HomeFragment : BaseFragment() {
+class HomeFragment : BaseFragment(), AdapterOnclick {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     @Inject
@@ -42,6 +44,16 @@ class HomeFragment : BaseFragment() {
         }
     }
 
+    override fun onClick(user: User) {
+       val fragment = parentFragmentManager.
+       findFragmentByTag(UserDetailsFragment.TAG) as? BaseFragment ?: UserDetailsFragment.newInstance(user)
+        parentFragmentManager.beginTransaction().apply {
+            replace(R.id.fragment_container, fragment, fragment.getFragmentTag())
+            addToBackStack(null)
+            commit()
+        }
+    }
+
     override fun subscribeViewModel() {
         viewModel = ViewModelProvider(this, viewModelFactory)
             .get(HomeViewModel::class.java)
@@ -51,9 +63,15 @@ class HomeFragment : BaseFragment() {
         return this
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        adapter.removeLoadStateListener{}
+    }
+
     @InternalCoroutinesApi
     override fun initViews() {
         user_list.adapter = adapter
+        adapter.listener = this
         adapter.addLoadStateListener { loadState ->
             // Only show the list if refresh succeeds.
             user_list.isVisible = loadState.mediator?.refresh is LoadState.NotLoading
@@ -87,6 +105,6 @@ class HomeFragment : BaseFragment() {
         fun newInstance() = HomeFragment().apply {
             arguments = bundleOf()
         }
-        const val TAG = "SplashScreenFragment"
+        const val TAG = "HomeFragment"
     }
 }

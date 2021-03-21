@@ -3,6 +3,7 @@ package com.jdagnogo.lydiausers.model
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 @Entity(tableName = "users")
 data class User(
@@ -10,4 +11,4 @@ data class User(
     @field:SerializedName("name") val name: String = "",
     @field:SerializedName("image") val image: String = "",
     @PrimaryKey @field:SerializedName("email") val email: String = ""
-)
+):Serializable

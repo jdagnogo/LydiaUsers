@@ -8,8 +8,10 @@ import javax.inject.Inject
 
 class UserListAdapter @Inject constructor(userComparator: UserComparator) :
     PagingDataAdapter<User, RecyclerView.ViewHolder>(userComparator) {
+    lateinit var listener: AdapterOnclick
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return UserViewHolder.create(parent)
+        return UserViewHolder.create(parent, listener)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {

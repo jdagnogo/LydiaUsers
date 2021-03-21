@@ -10,23 +10,32 @@ import com.jdagnogo.lydiausers.model.User
 import kotlinx.android.synthetic.main.item_user.view.*
 
 
-class UserViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+class UserViewHolder(view: View, var adapterOnclick: AdapterOnclick) :
+    RecyclerView.ViewHolder(view) {
     companion object {
-        fun create(parent: ViewGroup): UserViewHolder {
+        fun create(
+            parent: ViewGroup,
+            adapterOnclick: AdapterOnclick
+        ): UserViewHolder {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.item_user, parent, false)
-            return UserViewHolder(view)
+            return UserViewHolder(view, adapterOnclick)
         }
     }
 
     fun bind(user: User?) {
-        with(itemView) {
-            user_name.text = user?.name
-            user_email.text = user?.email
-            Glide.with(context)
-                .load(user?.image)
-                .circleCrop()
-                .into(user_image)
+        user?.let {
+            with(itemView) {
+                container.setOnClickListener {
+                    adapterOnclick.onClick(user)
+                }
+                user_name.text = user.name
+                user_email.text = user.email
+                Glide.with(context)
+                    .load(user.image)
+                    .circleCrop()
+                    .into(user_image)
+            }
         }
     }
 }
