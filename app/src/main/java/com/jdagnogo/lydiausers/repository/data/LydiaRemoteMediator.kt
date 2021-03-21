@@ -66,7 +66,7 @@ class LydiaRemoteMediator(
                 val prevKey = if (page == GITHUB_STARTING_PAGE_INDEX) null else page - 1
                 val nextKey = if (endOfPaginationReached) null else page + 1
                 val keys = userResponses.map {
-                    RemoteKeys(1, prevKey = prevKey, nextKey = nextKey)
+                    RemoteKeys(it.email, prevKey = prevKey, nextKey = nextKey)
                 }
                 database.getRemoteKeysDao().insertAll(keys)
                 database.getUserDao().insertAll(
@@ -85,9 +85,9 @@ class LydiaRemoteMediator(
         // Get the last page that was retrieved, that contained items.
         // From that last page, get the last item
         return state.pages.lastOrNull() { it.data.isNotEmpty() }?.data?.lastOrNull()
-            ?.let { repo ->
+            ?.let { user ->
                 // Get the remote keys of the last item retrieved
-                database.getRemoteKeysDao().remoteKeysRepoId(repo.id)
+                database.getRemoteKeysDao().remoteKeysRepoId(user.email)
             }
     }
 
@@ -95,9 +95,9 @@ class LydiaRemoteMediator(
         // Get the first page that was retrieved, that contained items.
         // From that first page, get the first item
         return state.pages.firstOrNull { it.data.isNotEmpty() }?.data?.firstOrNull()
-            ?.let { repo ->
+            ?.let { user ->
                 // Get the remote keys of the first items retrieved
-                database.getRemoteKeysDao().remoteKeysRepoId(repo.id)
+                database.getRemoteKeysDao().remoteKeysRepoId(user.email)
             }
     }
 
@@ -107,8 +107,8 @@ class LydiaRemoteMediator(
         // The paging library is trying to load data after the anchor position
         // Get the item closest to the anchor position
         return state.anchorPosition?.let { position ->
-            state.closestItemToPosition(position)?.id?.let { repoId ->
-                database.getRemoteKeysDao().remoteKeysRepoId(repoId)
+            state.closestItemToPosition(position)?.email?.let { email ->
+                database.getRemoteKeysDao().remoteKeysRepoId(email)
             }
         }
     }

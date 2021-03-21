@@ -11,8 +11,12 @@ import com.jdagnogo.lydiausers.R
 import com.jdagnogo.lydiausers.ui.adapter.UserListAdapter
 import com.jdagnogo.lydiausers.viewmodel.HomeViewModel
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.distinctUntilChangedBy
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -47,6 +51,7 @@ class HomeFragment : BaseFragment() {
         return this
     }
 
+    @InternalCoroutinesApi
     override fun initViews() {
         user_list.adapter = adapter
         adapter.addLoadStateListener { loadState ->
@@ -62,6 +67,14 @@ class HomeFragment : BaseFragment() {
                 ?: loadState.prepend as? LoadState.Error
             errorState?.let {
             }
+        }
+        lifecycleScope.launch {
+            adapter.loadStateFlow
+                // Only emit when REFRESH LoadState for RemoteMediator changes.
+                .distinctUntilChangedBy { it.refresh }
+                // Only react to cases where Remote REFRESH completes i.e., NotLoading.
+                .filter { it.refresh is LoadState.NotLoading }
+                .collect { user_list.scrollToPosition(0) }
         }
         getUsers()
     }
