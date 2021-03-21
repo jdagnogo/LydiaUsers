@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName
 @Entity(tableName = "users")
 data class User(
     @field:SerializedName("id") val id: Long = 0L,
-    @field:SerializedName("first") val first: String = "",
-    @field:SerializedName("last") val last: String = "",
+    @field:SerializedName("name") val name: String = "",
+    @field:SerializedName("image") val image: String = "",
     @PrimaryKey @field:SerializedName("email") val email: String = ""
 )

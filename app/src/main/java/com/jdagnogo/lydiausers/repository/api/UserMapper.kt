@@ -8,8 +8,8 @@ class UserMapper() {
         with(userResponse) {
             return User(
                 id = idResponse?.value?.toLongOrNull()?:0L,
-                first = name?.first ?: "",
-                last = name?.last ?: "",
+                name = "${name?.first} ${name?.last}",
+                image = picture?.large ?: "",
                 email = email
             )
         }

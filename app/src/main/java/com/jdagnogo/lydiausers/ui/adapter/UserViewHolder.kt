@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.jdagnogo.lydiausers.R
 import com.jdagnogo.lydiausers.model.User
 import kotlinx.android.synthetic.main.item_user.view.*
@@ -20,7 +21,12 @@ class UserViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     fun bind(user: User?) {
         with(itemView) {
-            name.text = user?.first
+            user_name.text = user?.name
+            user_email.text = user?.email
+            Glide.with(context)
+                .load(user?.image)
+                .circleCrop()
+                .into(user_image)
         }
     }
 }
