@@ -2,7 +2,9 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
     <data>
+
         <variable
             name="viewmodel"
             type="com.jdagnogo.lydiausers.viewmodel.UserDetailsViewModel" />
@@ -13,32 +15,122 @@
         android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline_right_inner"
+            android:id="@+id/guideline_top"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.25" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.1" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.9" />
 
         <View
             android:id="@+id/view"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@drawable/rounded_bottom"
-            app:layout_constraintBottom_toTopOf="@+id/guideline_right_inner"
+            app:layout_constraintBottom_toTopOf="@+id/guideline_top"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <TextView
+            android:id="@+id/user_name"
+            style="@style/title"
+            android:text="@{viewmodel.user.name}"
+            app:layout_constraintBottom_toTopOf="@+id/guideline_top"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+            app:layout_constraintStart_toStartOf="@+id/guideline_left"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Name" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/user_image"
             android:layout_width="100dp"
             android:layout_height="100dp"
             app:imageUrl="@{viewmodel.user.image}"
-            tools:src="@drawable/logo"
-            app:layout_constraintBottom_toTopOf="@+id/guideline_right_inner"
+            app:layout_constraintBottom_toTopOf="@+id/guideline_top"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view" />
+            app:layout_constraintTop_toBottomOf="@+id/view"
+            tools:src="@drawable/logo" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/user_location_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/ic_map"
+            app:layout_constraintStart_toStartOf="@+id/guideline_left"
+            app:layout_constraintTop_toBottomOf="@+id/user_image"
+            app:tint="@color/secondary" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:id="@+id/user_location"
+            android:text="@{viewmodel.user.location}"
+            tools:text="this is a reaaaaaaaaaaallyyyy loooooooooooooooong text"
+            android:layout_marginStart="16dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+            app:layout_constraintStart_toEndOf="@+id/user_location_img"
+            app:layout_constraintTop_toTopOf="@+id/user_location_img" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/user_phone_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/ic_phone"
+            app:layout_constraintStart_toStartOf="@+id/user_location_img"
+            app:layout_constraintTop_toBottomOf="@+id/user_location"
+            app:tint="@color/secondary" />
+
+        <TextView
+            android:id="@+id/user_phone"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@{viewmodel.user.phone}"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+            app:layout_constraintStart_toEndOf="@+id/user_phone_img"
+            app:layout_constraintTop_toTopOf="@+id/user_phone_img"
+            tools:text="phone" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/user_nat"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            tools:src="@drawable/logo"
+            app:natUrl="@{viewmodel.user.nationality}"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toStartOf="@+id/user_gender"
+            app:layout_constraintStart_toStartOf="@+id/guideline_left"
+            app:layout_constraintTop_toBottomOf="@+id/user_phone" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/user_gender"
+            android:layout_width="48dp"
+            app:genderUrl="@{viewmodel.user.gender}"
+            android:layout_height="48dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+            app:layout_constraintStart_toEndOf="@+id/user_nat"
+            app:layout_constraintTop_toBottomOf="@+id/user_phone"
+            tools:src="@drawable/logo" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -10,6 +10,10 @@ class UserMapper() {
                 id = idResponse?.value?.toLongOrNull()?:0L,
                 name = "${name?.first} ${name?.last}",
                 image = picture?.large ?: "",
+                gender = gender,
+                nationality = nationality,
+                phone = phone,
+                location = "${locationResponse?.street} ${locationResponse?.state} ${locationResponse?.city}",
                 email = email
             )
         }

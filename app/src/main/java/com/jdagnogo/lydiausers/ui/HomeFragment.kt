@@ -88,7 +88,7 @@ class HomeFragment : BaseFragment(), AdapterOnclick {
         adapter.listener = this
         adapter.addLoadStateListener { loadState ->
             // Only show the list if refresh succeeds.
-            user_list.isVisible = loadState.mediator?.refresh is LoadState.NotLoading
+            //user_list.isVisible = loadState.mediator?.refresh is LoadState.NotLoading
             // Show loading spinner during initial load or refresh.
             // Show the retry state if initial load or refresh fails.
 

@@ -64,14 +64,8 @@
 
         <TextView
             android:id="@+id/title"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingBottom="16dp"
+            style="@style/title"
             android:text="@string/all_users"
-            android:textColor="@color/secondary"
-            android:textSize="35sp"
-            android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/guideline_top"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
