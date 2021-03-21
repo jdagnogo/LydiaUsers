@@ -1,13 +1,18 @@
 package com.jdagnogo.lydiausers.ui
 
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import com.jdagnogo.lydiausers.R
+import com.jdagnogo.lydiausers.databinding.FragmentHomeBinding
 import com.jdagnogo.lydiausers.model.User
 import com.jdagnogo.lydiausers.ui.adapter.AdapterOnclick
 import com.jdagnogo.lydiausers.ui.adapter.UserListAdapter
@@ -25,6 +30,7 @@ import javax.inject.Inject
 class HomeFragment : BaseFragment(), AdapterOnclick {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
+
     @Inject
     lateinit var adapter: UserListAdapter
 
@@ -45,13 +51,7 @@ class HomeFragment : BaseFragment(), AdapterOnclick {
     }
 
     override fun onClick(user: User) {
-       val fragment = parentFragmentManager.
-       findFragmentByTag(UserDetailsFragment.TAG) as? BaseFragment ?: UserDetailsFragment.newInstance(user)
-        parentFragmentManager.beginTransaction().apply {
-            replace(R.id.fragment_container, fragment, fragment.getFragmentTag())
-            addToBackStack(null)
-            commit()
-        }
+        (requireActivity() as MainActivity).onNavigationToFragment(UserDetailsFragment.TAG, user)
     }
 
     override fun subscribeViewModel() {
@@ -63,9 +63,23 @@ class HomeFragment : BaseFragment(), AdapterOnclick {
         return this
     }
 
+    override fun initDataBiding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): View {
+        return FragmentHomeBinding.inflate(
+            inflater,
+            container,
+            false
+        ).apply {
+            lifecycleOwner = viewLifecycleOwner
+            viewModel = viewModel
+        }.root
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
-        adapter.removeLoadStateListener{}
+        adapter.removeLoadStateListener {}
     }
 
     @InternalCoroutinesApi
@@ -105,6 +119,7 @@ class HomeFragment : BaseFragment(), AdapterOnclick {
         fun newInstance() = HomeFragment().apply {
             arguments = bundleOf()
         }
+
         const val TAG = "HomeFragment"
     }
 }
