@@ -1,5 +1,6 @@
 package com.jdagnogo.lydiausers.viewmodel
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
@@ -13,7 +14,8 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class HomeViewModel @Inject constructor(private val repository: UserRepository) : ViewModel() {
-    private var currentSearchResult: Flow<PagingData<User>>? = null
+    @VisibleForTesting
+    var currentSearchResult: Flow<PagingData<User>>? = null
 
     fun getUsers(): Flow<PagingData<User>> {
         val newResult: Flow<PagingData<User>> = repository.getUsers()

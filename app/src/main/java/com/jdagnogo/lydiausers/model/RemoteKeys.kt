@@ -1,4 +1,4 @@
-package com.jdagnogo.lydiausers.repository.data
+package com.jdagnogo.lydiausers.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

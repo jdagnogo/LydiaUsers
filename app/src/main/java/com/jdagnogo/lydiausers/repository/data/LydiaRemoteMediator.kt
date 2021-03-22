@@ -8,6 +8,7 @@ import com.jdagnogo.lydiausers.model.User
 import com.jdagnogo.lydiausers.repository.api.UserApi
 import retrofit2.HttpException
 import androidx.room.withTransaction
+import com.jdagnogo.lydiausers.model.RemoteKeys
 import com.jdagnogo.lydiausers.repository.api.UserMapper
 import java.io.IOException
 
@@ -66,7 +67,11 @@ class LydiaRemoteMediator(
                 val prevKey = if (page == GITHUB_STARTING_PAGE_INDEX) null else page - 1
                 val nextKey = if (endOfPaginationReached) null else page + 1
                 val keys = userResponses.map {
-                    RemoteKeys(it.email, prevKey = prevKey, nextKey = nextKey)
+                    RemoteKeys(
+                        it.email,
+                        prevKey = prevKey,
+                        nextKey = nextKey
+                    )
                 }
                 database.getRemoteKeysDao().insertAll(keys)
                 database.getUserDao().insertAll(

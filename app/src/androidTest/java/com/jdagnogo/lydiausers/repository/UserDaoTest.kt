@@ -39,7 +39,7 @@ class UserDaoTest {
 
     @Test
     @Throws(Exception::class)
-    fun insertAllShouldCreateNewUser() = runBlocking {
+    fun insertOneShouldCreateOnlyNewUser() = runBlocking {
         val user = User(name = FAKE_NAME, email = FAKE_EMAIL)
 
         sut.insertAll(listOf(user))
@@ -52,6 +52,23 @@ class UserDaoTest {
 
     @Test
     @Throws(Exception::class)
+    fun insertAllShouldCreateAllNewUser() = runBlocking {
+        val user = User(name = FAKE_NAME, email = FAKE_EMAIL)
+        val user2 = User(name = FAKE_EMAIL, email = FAKE_NAME)
+
+        sut.insertAll(listOf(user, user2))
+
+        val data = sut.getAll().load(PagingSource.LoadParams.Refresh(12, 12, false))
+        val result = (data as? PagingSource.LoadResult.Page)?.data
+        assertTrue(result?.size == 2)
+        assertTrue(result?.getOrNull(0)?.name == FAKE_NAME)
+        assertTrue(result?.getOrNull(0)?.email == FAKE_EMAIL)
+        assertTrue(result?.getOrNull(1)?.name == FAKE_EMAIL)
+        assertTrue(result?.getOrNull(1)?.email == FAKE_NAME)
+    }
+
+    @Test
+    @Throws(Exception::class)
     fun clearShouldDeleteAllUser() = runBlocking {
         val user = User(name = FAKE_NAME, email = FAKE_EMAIL)
         sut.insertAll(listOf(user))
@@ -59,15 +76,16 @@ class UserDaoTest {
         sut.clear()
 
         val data = sut.getAll().load(PagingSource.LoadParams.Refresh(FAKE_INT, FAKE_INT, false))
-        val result = (data as? PagingSource.LoadResult.Page)?.data?.first()
-        assertTrue(result?.email == FAKE_EMAIL)
-        assertTrue(result?.name == FAKE_NAME)
+        val result = (data as? PagingSource.LoadResult.Page)?.data
+        assertTrue(result?.isEmpty()?:false)
     }
 
 
     companion object {
         const val FAKE_INT= 43
         const val FAKE_NAME = "FAKE_NAME"
+        const val FAKE_PHONE = "FAKE_PHONE"
+        const val FAKE_NAT = "FAKE_NAT"
         const val FAKE_EMAIL = "FAKE_EMAIL"
     }
 }

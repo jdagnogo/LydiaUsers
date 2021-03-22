@@ -1,5 +1,6 @@
 package com.jdagnogo.lydiausers.ui
 
+import android.graphics.drawable.Drawable
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
@@ -14,23 +15,27 @@ fun loadImage(view: AppCompatImageView, image: String?) {
 
 @BindingAdapter("natUrl")
 fun loadNatImage(view: AppCompatImageView, nat: String?) {
-    if (!nat.isNullOrEmpty()) {
-        val drawable = when (nat) {
-            "AU" -> R.drawable.australia
-            "BR" -> R.drawable.brazil
-            else -> R.drawable.france
-        }
+    val drawable = when (nat) {
+        "AU" -> R.drawable.australia
+        "BR" -> R.drawable.brazil
+        else -> R.drawable.france
+    }
+    loadImage(view, nat, drawable)
+
+}
+
+private fun loadImage(view: AppCompatImageView, value: String?, drawable: Int?) {
+    if (!value.isNullOrEmpty()) {
         Glide.with(view.context).load(drawable).into(view)
+        view.tag = drawable
     }
 }
 
 @BindingAdapter("genderUrl")
 fun loadGenderImage(view: AppCompatImageView, gender: String?) {
-    if (!gender.isNullOrEmpty()) {
-        val drawable = when (gender) {
-            "male" -> R.drawable.male
-            else -> R.drawable.female
-        }
-        Glide.with(view.context).load(drawable).into(view)
+    val drawable = when (gender) {
+        "male" -> R.drawable.male
+        else -> R.drawable.female
     }
+    loadImage(view, gender, drawable)
 }
